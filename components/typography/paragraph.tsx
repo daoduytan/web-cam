@@ -2,11 +2,18 @@ import { ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
+  className?: string
 }
 
-function Paragraph({ children, ...props }: Props) {
+function Paragraph({ children, className, ...props }: Props) {
+  let classNames = 'text-dark dark:text-white';
+
+  if (className) {
+    classNames = `${classNames} ${className}`;
+  }
+
   return (
-    <p {...props} className="text-dark dark:text-white">
+    <p {...props} className={classNames}>
       {children}
     </p>
   );

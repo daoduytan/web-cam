@@ -1,0 +1,37 @@
+.menu li {
+  cursor: pointer;
+  position: relative;
+}
+
+.menu li a,
+.menu li span {
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.menu li:hover a,
+.menu li:hover span,
+.menu .active a {
+  transform: translateY(-3px);
+}
+
+.menu .active {
+  background-color: red;
+}
+
+.menu li:hover::after,
+.menu .active::after {
+  width: 50px;
+}
+
+.menu li::after {
+  transition: all 0.2s ease-in-out;
+  content: '';
+  display: inline-block;
+  height: 5px;
+  width: 0px;
+  background: red;
+  position: absolute;
+  bottom: 3px;
+  right: 0;
+}

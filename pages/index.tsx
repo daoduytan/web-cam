@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
+import { IProject } from '../collection';
 import {
   Background,
   Button,
@@ -9,10 +11,19 @@ import {
   ProjectList,
   Socials,
   Text,
+  Title,
   ToggleTheme,
 } from '../components';
+import styles from '../styles/home.module.css'
+import { get } from 'lodash'
+import { useDevice } from '../helps';
 
-const Home: NextPage = () => {
+interface Props {
+  projects: IProject[]
+}
+
+const Home: NextPage<Props> = ({ projects = [] }) => {
+  const device = useDevice()
   return (
     <Background>
       <Head>
@@ -24,43 +35,86 @@ const Home: NextPage = () => {
       <main>
         <div>
           <Container>
-            <div className="grid items-center  min-h-screen">
-              <Logo />
-              <div className="text-dark dark:text-white text-7xl">
-                <div>Cam</div>
-                <div className="font-semibold">art director</div>
-                <div>saigon, vietnam.</div>
+            <div className="grid items-center min-h-screen">
+              <div className={`${styles.logo} text-center mx-auto lg:mx-0 relative`}>
+                <Logo />
               </div>
 
-              <div>
-                <div className="mb-6">
-                  <Text>Wanna talk? You know where to find me.</Text>
+              <div className={`${styles.intro}  text-center lg:text-left text-4xl md:text-7xl leading-10`}>
+                <Text>Cam</Text>
+                <div className='my-2'>
+                  <Text className="font-semibold">art director</Text>
+                </div>
+                <Text>saigon, vietnam.</Text>
+              </div>
+
+              <div className='my-10'>
+                <div className="mb-6 text-center lg:text-left">
+                  <Text className='text-xl md:text-4xl'>Wanna talk?<br className='lg:hidden' /> You know where to find me.</Text>
                 </div>
 
-                <div className="flex gap-4 justify-between">
-                  <div className="flex gap-4">
+                <div className="block lg:flex lg:justify-between">
+                  <div className="flex flex-wrap justify-center gap-4">
                     <Socials />
                   </div>
 
-                  <ToggleTheme>
-                    <Button>
-                      <span>Light it</span>
-                    </Button>
-                  </ToggleTheme>
+                  <div className='hidden lg:block'>
+                    <ToggleTheme>
+                      <Button>
+                        <span>Light it</span>
+                      </Button>
+                    </ToggleTheme>
+
+                  </div>
                 </div>
               </div>
+
             </div>
           </Container>
         </div>
 
         <Container>
-          <ProjectList projects={Array.from(Array(3).keys())} />
+          {device === 'mobile' || device === 'table' ? (
+            <div className='overflow-hidden mt-7 -mx-4'>
+              <div className="overflow-x-auto">
+                <div className='inline-flex px-2 whitespace-nowrap'>
+                  {projects.map(project => (
+                    <div key={project._id} className="w-40 md:w-96 mx-2">
+                      <Link href={`/projects/view/${project.slug}`} >
+                        <a
+                          className="block project overflow-hidden "
+                        >
+                          <Image
+                            width={384}
+                            height={384}
+                            alt={project.title}
+                            src={get(project, 'thumbnail.url')}
+                            objectFit="cover"
+                          />
 
-          <div className="mt-16">
+                          <Title className='uppercase border-b py-2 mb-2 text-sm'>
+                            {project.title}
+                          </Title>
+                          <Text className="text-sm">{project.service}</Text>
+
+                        </a>
+                      </Link>
+                    </div>
+
+                  ))}
+
+                </div>
+              </div>
+            </div>
+          ) : (
+            <ProjectList projects={projects} />
+          )}
+
+          <div className="mt-8 text-center md:text-right lg:text-left">
             <Link href="/projects">
               <a>
                 <Button>
-                  <span>See all my projects</span>
+                  <Text>See all my projects</Text>
                 </Button>
               </a>
             </Link>
@@ -70,5 +124,30 @@ const Home: NextPage = () => {
     </Background>
   );
 };
+
+export async function getStaticProps() {
+  try {
+    // Call an external API endpoint to get posts.
+    // You can use any data fetching library
+    const res = await fetch('http://localhost:3000/api/home');
+
+    const { data: { projects } } = await res.json();
+
+    // By returning { props: { posts } }, the Blog component
+    // will receive `posts` as a prop at build time
+    return {
+      props: {
+        projects
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        projects: []
+      },
+    };
+  }
+
+}
 
 export default Home;

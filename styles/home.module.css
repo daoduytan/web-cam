@@ -1,0 +1,11 @@
+.logo {
+  width: 573px;
+  height: 107px;
+}
+
+@media screen and (max-width: 767px) {
+  .logo {
+    width: 308px;
+    height: 57px;
+  }
+}

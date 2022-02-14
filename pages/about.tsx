@@ -4,43 +4,56 @@ import {
   Background,
   Container,
   Header,
-  Title,
-  Text,
+  Paragraph,
   Socials,
+  Text,
+  Title,
 } from '../components';
 
 interface Props {
   title: string;
+  data: any[];
+  type?: 'experience' | 'recognition';
 }
-function AboutBlock({ title }: Props) {
-  return (
-    <div className="grid grid-cols-3 gap-6">
-      <div className="col-start-2 flex items-center text-4xl">
-        <Text>{title}</Text>
-      </div>
-      <div>
-        <ul className="grid gap-4">
-          <li>
-            <Text>Design internship | Phibious (Vietnam)</Text>
-          </li>
-          <li>
-            <Text>Graphic designer | ANTS (Vietnam)</Text>
-          </li>
 
-          <li>
-            <Text>
-              Freelance design | brand identity, packaging and interactive
-              design
-            </Text>
-          </li>
+function AboutBlock({ title, data, type = 'experience' }: Props) {
+  const renderDescription = (text: string) => {
+    if (type === 'experience') {
+      return (
+        `| ${text}`
+      )
+    }
+
+    return (
+      <div>
+        {text.split('\n').map(item => (
+          <Paragraph key={item}>{item}</Paragraph>
+        ))}
+      </div>
+    )
+  }
+
+  return (
+    <div className="grid md:grid-cols-12 gap-6">
+      <div className="md:col-start-6 md:col-end-12 lg:col-start-3  xl:col-start-4 lg:col-end-6  flex items-center">
+        <Text className='text-4xl md:text-7xl'>{title}</Text>
+      </div>
+      <div className='md:col-start-6 md:col-end-12 lg:col-start-9 lg:col-end-13'>
+        <ul className="grid gap-4 md:gap-6">
+          {data.map((item) => (
+            <li key={item._id}>
+              <Text className='text-xl leading-8'>
+                {item.title} {renderDescription(item.description)}
+              </Text>
+            </li>
+          ))}
         </ul>
-        <Text>dadsds</Text>
       </div>
     </div>
   );
 }
 
-const About: NextPage = () => {
+const About: NextPage = (props: any) => {
   return (
     <Background>
       <Head>
@@ -50,42 +63,68 @@ const About: NextPage = () => {
       </Head>
 
       <Header />
-
-      <Container>
-        <div className="text-6xl">
-          <Title level="1">Hey, this is cam.</Title>
-          <div className="grid grid-cols-10">
-            <div className="col-start-2 col-end-10">
-              <Title level="3">
-                I am an art director, a graphic designer with experience of
-                working with both local & global clients and agencies.
-              </Title>
+      <main className="mt-4 md:mt-10">
+        <Container>
+          <div className="text-6xl">
+            <Title level="1" className="mb-4 text-4xl md:text-7xl">
+              {props.pageSetting.aboutTitle}
+            </Title>
+            <div className="grid grid-cols-10">
+              <div className="col-start-1 md:col-start-2 col-end-10 lg:col-end-8 xl:col-end-6 ">
+                <Title level="3" className='text-2xl md:text-4xl md:leading-relaxed'>{props.pageSetting.aboutTitleSub}</Title>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="grid gap-16">
-          <AboutBlock title="Experience" />
-          <AboutBlock title="Recognition" />
-        </div>
+          <div className="grid gap-8 md:gap-12 xl:gap-20 my-8 md:my-20 lg:my-40">
+            <AboutBlock data={props.experiences} title="Experience" />
+            <AboutBlock
+              data={props.recognitions}
+              title="Recognition"
+              type="recognition"
+            />
+          </div>
 
-        <div>
           <div>
-            <Text>
-              Wanna talk?
-              <br /> You know where to find me.
-            </Text>
-          </div>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-4">
-              <Socials />
+            <div className="mb-5 text-center md:text-left">
+              <Text className='text-xl md:text-4xl'>
+                Wanna talk?
+                <br /> You know where to find me.
+              </Text>
             </div>
-            <Text>@{new Date().getFullYear()}</Text>
+
+            <div className="text-center md:flex md:items-center md:justify-between">
+              <div className="flex flex-wrap justify-center md:justify-start gap-4 mb-10 md:mb-0">
+                <Socials />
+              </div>
+
+              <Text>&copy;{new Date().getFullYear()}</Text>
+            </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </main>
     </Background>
+
   );
 };
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const res = await fetch('http://localhost:3000/api/about');
+  const { data } = await res.json();
+
+  const { experiences, recognitions, pageSetting } = data;
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      experiences,
+      recognitions,
+      pageSetting,
+    },
+  };
+}
 
 export default About;

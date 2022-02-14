@@ -1,10 +1,12 @@
 import { ReactNode } from 'react';
+import styles from './container.module.css'
 
 interface Props {
   children: ReactNode;
 }
+
 function Container({ children }: Props) {
-  return <div className="container pl-2 pr-2 mx-auto">{children}</div>;
+  return <div className={`${styles.container}  pl-4 pr-4 mx-auto`}>{children}</div>;
 }
 
 export { Container };
