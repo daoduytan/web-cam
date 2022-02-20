@@ -130,22 +130,15 @@ export async function getStaticProps() {
   try {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
-    // const res = await fetch('https://web-cam-gules.vercel.app/api');
-    // const res = await fetch('http://localhost:3000/api');
+    const res = await fetch('https://web-cam-gules.vercel.app/api');
 
-    // console.log('projects', await res.json())
-
-    // // console.log('API_URI', API_URI)
-
-    // const { data: { projects } } = await res.json();
-
-    // console.log('projects', projects)
+    const { data: { projects } } = await res.json();
 
     // By returning { props: { posts } }, the Blog component
     // will receive `posts` as a prop at build time
     return {
       props: {
-        projects: []
+        projects
       },
     };
   } catch (error) {
