@@ -1,0 +1,13 @@
+.customImg {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
+}
+
+.unsetImg {
+  width: 100%;
+}
+.unsetImg > span {
+  position: unset !important;
+}

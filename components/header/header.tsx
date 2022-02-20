@@ -1,23 +1,15 @@
-import Link from 'next/link';
 import { Container } from '../grid';
-import { Logo } from '../logo';
+import { LogoHeader } from './logo-header';
 import { Navigation } from './navigation';
 
 function Header() {
   return (
     <header>
       <Container>
-        <div className="py-10 flex justify-between items-center">
-          <div style={{ maxWidth: 300 }}>
-            <Link href="/">
-              <a>
-                <Logo />
-              </a>
-            </Link>
-          </div>
-          <div>
-            <Navigation />
-          </div>
+        <div className="flex h-16 md:h-20 justify-between items-center">
+          <LogoHeader />
+
+          <Navigation />
         </div>
       </Container>
     </header>

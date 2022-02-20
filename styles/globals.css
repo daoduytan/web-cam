@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.menu li {
+  cursor: pointer;
+  position: relative;
+}
+
+.menu li::after {
+  transition: all 0.2s ease-in-out;
+  content: '';
+  display: inline-block;
+  height: 5px;
+  width: 0px;
+  background: red;
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+}
+
+.menu li a,
+.menu li span {
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.menu li:hover a,
+.menu li:hover span {
+  transform: translateY(-5px);
+}
+
+.menu .active a {
+  transform: translateY(-5px);
+}
+
+.menu .active:hover a {
+  padding-bottom: 0;
+}
+
+.menu li:hover::after,
+.menu .active::after {
+  width: 50px;
+}
