@@ -9,6 +9,7 @@ import {
   Text,
   Title,
 } from '../components';
+import { API_URI } from '../constants'
 
 interface Props {
   title: string;
@@ -111,18 +112,21 @@ const About: NextPage = (props: any) => {
 export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
-  const res = await fetch('http://localhost:3000/api/about');
-  const { data } = await res.json();
+  // const res = await fetch(`${API_URI}/api/about'`);
+  // const { data } = await res.json();
 
-  const { experiences, recognitions, pageSetting } = data;
+  // const { experiences, recognitions, pageSetting } = data;
 
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
-      experiences,
-      recognitions,
-      pageSetting,
+      experiences: [],
+      recognitions: [],
+      pageSetting: {
+        aboutTitle: '',
+        aboutTitleSub: ''
+      }
     },
   };
 }

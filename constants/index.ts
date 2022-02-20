@@ -1,4 +1,5 @@
 export const MONGODB_URI = <string>process.env.MONGODB_URI;
+export const API_URI = <string>process.env.API_URI;
 
 export const SERECT_KEY = 'ruweirowurweropqeq';
 

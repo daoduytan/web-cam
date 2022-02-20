@@ -1,8 +1,11 @@
 import { NextApiResponse } from 'next';
+import { dbConnect } from '../../lib/dbConnect';
 import { Project } from '../../models';
 
 export default async function home(req: NextApiResponse, res: NextApiResponse) {
   try {
+    await dbConnect();
+
     const projects = await Project.find({}).populate({
       path: 'thumbnail',
     });
