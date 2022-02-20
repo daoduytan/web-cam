@@ -1,11 +1,14 @@
 import { NextApiResponse } from 'next';
 import { Experience, PageSetting, Recognition } from '../../models';
+import { dbConnect } from '../../lib/dbConnect';
 
 export default async function about(
   req: NextApiResponse,
   res: NextApiResponse
 ) {
   try {
+    await dbConnect();
+
     const experiences = await Experience.find({});
     const recognitions = await Recognition.find({});
     const pageSetting = await PageSetting.findOne({});

@@ -53,7 +53,16 @@ function AboutBlock({ title, data, type = 'experience' }: Props) {
   );
 }
 
-const About: NextPage = (props: any) => {
+interface AboutProps {
+  pageSetting: {
+    aboutTitle: string;
+    aboutTitleSub: string;
+  };
+  experiences: any[];
+  recognitions: any[]
+}
+
+const About: NextPage<AboutProps> = ({ pageSetting, experiences, recognitions }) => {
   return (
     <Background>
       <Head>
@@ -67,19 +76,19 @@ const About: NextPage = (props: any) => {
         <Container>
           <div className="text-6xl">
             <Title level="1" className="mb-4 text-4xl md:text-7xl">
-              {props.pageSetting.aboutTitle}
+              {pageSetting.aboutTitle}
             </Title>
             <div className="grid grid-cols-10">
               <div className="col-start-1 md:col-start-2 col-end-10 lg:col-end-8 xl:col-end-6 ">
-                <Title level="3" className='text-2xl md:text-4xl md:leading-relaxed'>{props.pageSetting.aboutTitleSub}</Title>
+                <Title level="3" className='text-2xl md:text-4xl md:leading-relaxed'>{pageSetting.aboutTitleSub}</Title>
               </div>
             </div>
           </div>
 
           <div className="grid gap-8 md:gap-12 xl:gap-20 my-8 md:my-20 lg:my-40">
-            <AboutBlock data={props.experiences} title="Experience" />
+            <AboutBlock data={experiences} title="Experience" />
             <AboutBlock
-              data={props.recognitions}
+              data={recognitions}
               title="Recognition"
               type="recognition"
             />
@@ -111,9 +120,7 @@ const About: NextPage = (props: any) => {
 export async function getStaticProps() {
   try {
     const res = await fetch('https://web-cam-gules.vercel.app/api/about');
-    const { data } = await res.json();
-
-    const { experiences, recognitions, pageSetting } = data;
+    const { data: { experiences, recognitions, pageSetting } } = await res.json();
 
     return {
       props: {

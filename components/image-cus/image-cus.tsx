@@ -6,7 +6,6 @@ interface Props extends ImageProps {
 }
 
 function ImageCus({ src }: Props) {
-	console.log('styles')
 	return (
 		<div className={styles.unsetImg}>
 			<Image alt="Mountains" src={src} layout="fill" className={styles.customImg}
