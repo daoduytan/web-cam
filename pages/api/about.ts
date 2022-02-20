@@ -19,6 +19,7 @@ export default async function about(
       },
     });
   } catch (error) {
-    return res.status(400).json({ status: false });
+    console.log('error about', error);
+    return res.status(500).json({ status: false });
   }
 }
