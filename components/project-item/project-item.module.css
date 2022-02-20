@@ -1,0 +1,22 @@
+.projectThumb::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.projectThumb:hover:after {
+  left: 7px;
+  top: 7px;
+  background-color: #fc1926;
+}
+
+.projectThumb img {
+  position: relative;
+  z-index: 10;
+}

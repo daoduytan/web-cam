@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Text, Title } from '..';
 import { IProject } from '../../collection';
 import { useDevice } from '../../helps';
+import styles from './project-item.module.css'
 
 interface Props {
   numberKey: number;
@@ -16,10 +17,10 @@ function ProjectItem({ numberKey, project }: Props) {
   if (device === 'mobile' || device === 'table') {
     return (
       <div>
-        <div className='md:w-2/3 mx-auto bg-pink-300'>
+        <div className='md:w-2/3 mx-auto'>
           <Link href={`/projects/view/${project.slug}`}>
             <a
-              className="block"
+              className={`${styles.projectThumb} relative block`}
             >
               <Image
                 src={get(project, 'thumbnail.url')}
@@ -52,7 +53,7 @@ function ProjectItem({ numberKey, project }: Props) {
           <Link href={`/projects/view/${project.slug}`}>
             <a
               style={{ paddingBottom: '70%' }}
-              className="block relative col-start-2 col-span-2 text-dark dark:text-white h-60 bg-pink-500"
+              className={`${styles.projectThumb} block relative col-start-2 col-span-2  h-60`}
             >
               <Image
                 src={get(project, 'thumbnail.url')}
@@ -83,7 +84,8 @@ function ProjectItem({ numberKey, project }: Props) {
       <div className="col-start-2">
         <Link href={`/projects/view/${project.slug}`}>
           <a
-            className="bg-pink-500 relative block"
+
+            className={`${styles.projectThumb} block relative `}
             style={{ paddingBottom: '100%' }}
           >
             <Image
@@ -112,7 +114,7 @@ function ProjectItem({ numberKey, project }: Props) {
         <Link href={`/projects/view/${project.slug}`}>
 
           <a
-            className="bg-pink-500 relative block"
+            className={`${styles.projectThumb} block relative `}
             style={{ paddingBottom: '100%' }}
           >
             <Image
@@ -139,7 +141,7 @@ function ProjectItem({ numberKey, project }: Props) {
     return (
       <div>
         <Link href={`/projects/view/${project.slug}`}>
-          <a className="h-52 bg-pink-500 relative block">
+          <a className={`${styles.projectThumb} h-52 block relative `}>
             <Image
               src={get(project, 'thumbnail.url')}
               layout="fill"
@@ -156,7 +158,7 @@ function ProjectItem({ numberKey, project }: Props) {
           </h3>
           <span>{project.service}</span>
         </div>
-      </div>
+      </div >
     );
   }
 
@@ -164,7 +166,7 @@ function ProjectItem({ numberKey, project }: Props) {
     return (
       <div>
         <Link href={`/projects/view/${project.slug}`}>
-          <a className="h-48 bg-pink-500 relative">
+          <a className={`${styles.projectThumb} block h-48 relative`}>
             <Image
               src={get(project, 'thumbnail.url')}
               layout="fill"
@@ -192,7 +194,8 @@ function ProjectItem({ numberKey, project }: Props) {
           <Link href={`/projects/view/${project.slug}`}>
             <a
               style={{ paddingBottom: '70%' }}
-              className="relative col-start-1 col-span-2 text-dark dark:text-white h-60 block bg-pink-500"
+              className={`${styles.projectThumb} relative col-start-1 col-span-2  h-60 block`}
+
             >
               <Image
                 src={get(project, 'thumbnail.url')}
@@ -221,7 +224,8 @@ function ProjectItem({ numberKey, project }: Props) {
     return (
       <div>
         <Link href={`/projects/view/${project.slug}`}>
-          <a className="h-52 bg-pink-500 relative block">
+          <a className="">
+            className={`${styles.projectThumb} h-52 relative block`}
             <Image
               src={get(project, 'thumbnail.url')}
               layout="fill"
@@ -246,7 +250,8 @@ function ProjectItem({ numberKey, project }: Props) {
     return (
       <div>
         <Link href={`/projects/view/${project.slug}`}>
-          <a className="h-48 bg-pink-500 relative block">
+
+          <a className={`${styles.projectThumb} block h-48 relative`}>
             <Image
               src={get(project, 'thumbnail.url')}
               layout="fill"
@@ -271,7 +276,8 @@ function ProjectItem({ numberKey, project }: Props) {
     return (
       <div className="col-start-2">
         <Link href={`/projects/view/${project.slug}`}>
-          <a className="h-52 bg-pink-500 relative block">
+
+          <a className={`${styles.projectThumb} block h-52 relative`}>
             <Image
               src={get(project, 'thumbnail.url')}
               layout="fill"
@@ -296,7 +302,8 @@ function ProjectItem({ numberKey, project }: Props) {
     return (
       <div>
         <Link href={`/projects/view/${project.slug}`}>
-          <a className="h-48 bg-pink-500 relative block">
+
+          <a className={`${styles.projectThumb} block h-48 relative`}>
             <Image
               src={get(project, 'thumbnail.url')}
               layout="fill"
@@ -320,7 +327,8 @@ function ProjectItem({ numberKey, project }: Props) {
   return (
     <div>
       <Link href={`/projects/view/${project.slug}`}>
-        <a className="h-48 bg-pink-500 relative block">
+
+        <a className={`${styles.projectThumb} block h-48 relative`}>
           <Image
             src={get(project, 'thumbnail.url')}
             layout="fill"

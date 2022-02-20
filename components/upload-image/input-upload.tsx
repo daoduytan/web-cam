@@ -42,7 +42,12 @@ function InputUpload({ upload }: Props) {
 				},
 			});
 
-			upload(imgRes as IImage);
+			const dataImage = await imgRes.json();
+
+			console.log('dataImage', dataImage)
+
+
+			upload(dataImage.data as IImage);
 		} catch (error) {
 		} finally {
 			setLoading(false);

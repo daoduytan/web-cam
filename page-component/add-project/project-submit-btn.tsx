@@ -22,6 +22,7 @@ function ProjectSubmitBtn() {
 	const { project } = useFormProject();
 	const [loading, setLoading] = useState<boolean>(false);
 	const token = user?.token;
+
 	const addProject = async () => {
 		await fetch('/api/project', {
 			method: 'POST',

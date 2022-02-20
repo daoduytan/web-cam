@@ -108,7 +108,7 @@ const Home: NextPage<Props> = ({ projects = [] }) => {
               </div>
             </div>
           ) : (
-            <ProjectList projects={projects} />
+            <ProjectList projects={projects.filter((_, index) => index < 3)} />
           )}
 
           <div className="mt-8 text-center md:text-right lg:text-left">
@@ -130,7 +130,8 @@ export async function getStaticProps() {
   try {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
-    const res = await fetch('https://web-cam-gules.vercel.app/api');
+    // const res = await fetch('https://web-cam-gules.vercel.app/api');
+    const res = await fetch('http://localhost:3000/api');
 
     const { data: { projects } } = await res.json();
 

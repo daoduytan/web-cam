@@ -6,9 +6,11 @@ export default async function home(req: NextApiResponse, res: NextApiResponse) {
   try {
     await dbConnect();
 
-    const projects = await Project.find({}).populate({
-      path: 'thumbnail',
-    });
+    const projects = await Project.find({ pick: true })
+      .populate({
+        path: 'thumbnail',
+      })
+      .limit(4);
 
     return res.status(200).json({
       status: true,

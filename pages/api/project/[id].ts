@@ -37,10 +37,13 @@ export default async function project(
 
         const { title } = req.body;
 
-        let dataProject = {
-          ...req.body,
-          slug: removeVietnameseTones(title.toLowerCase()).split(' ').join('-'),
-        };
+        let dataProject: any = req.body;
+
+        if (title) {
+          dataProject.slug = removeVietnameseTones(title.toLowerCase())
+            .split(' ')
+            .join('-');
+        }
 
         const project = await Project.findByIdAndUpdate(
           req.query.id,
@@ -51,6 +54,11 @@ export default async function project(
         return res.status(200).json({
           status: true,
           project,
+        });
+      case 'DELETE':
+        await Project.findByIdAndDelete(req.query.id);
+        return res.status(200).json({
+          status: true,
         });
       default:
         res.status(200).json({

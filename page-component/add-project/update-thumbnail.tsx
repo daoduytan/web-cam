@@ -13,6 +13,9 @@ function UpdateThumbnail() {
 		updateFieldProject({
 			thumbnail: image._id,
 		});
+
+		console.log('image', image)
+
 		setImg(image);
 	};
 
