@@ -110,7 +110,11 @@ function ProjectItem({ numberKey, project }: Props) {
     return (
       <div>
         <Link href={`/projects/view/${project.slug}`}>
-          <a className="h-48 bg-pink-500 relative">
+
+          <a
+            className="bg-pink-500 relative block"
+            style={{ paddingBottom: '100%' }}
+          >
             <Image
               src={get(project, 'thumbnail.url')}
               layout="fill"
