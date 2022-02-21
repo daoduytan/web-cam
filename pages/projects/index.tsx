@@ -4,7 +4,7 @@ import { IProject } from '../../collection';
 import { Background, Container, Header, ProjectList } from '../../components';
 
 interface Props {
-  projects: IProject[]
+  projects: IProject[];
 }
 
 const Projects: NextPage<Props> = ({ projects }) => {
@@ -17,12 +17,11 @@ const Projects: NextPage<Props> = ({ projects }) => {
       </Head>
 
       <Header />
-      <main className='mt-12'>
+      <main className="mt-12">
         <Container>
           <ProjectList projects={projects} />
         </Container>
       </main>
-
     </Background>
   );
 };
@@ -31,15 +30,16 @@ export async function getStaticProps() {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const res = await fetch('https://web-cam-gules.vercel.app/api/project');
+  // const res = await fetch('http://localhost:3000/api/project?page=1');
 
   const { data } = await res.json();
 
-  console.log('data', data)
+  console.log('data', data);
   // By returning { props: { posts } }, the Blog component
   // will receive `posts` as a prop at build time
   return {
     props: {
-      projects: data
+      projects: data,
     },
   };
 }

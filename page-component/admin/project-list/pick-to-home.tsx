@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { IProject } from "../../collection"
-import { useAuth } from "../../context/auth-context";
+import { IProject } from "../../../collection"
+import { useAuth } from "../../../context/auth-context";
 
 interface Props {
 	project: IProject

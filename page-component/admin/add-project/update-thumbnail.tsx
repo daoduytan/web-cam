@@ -1,8 +1,8 @@
 import { get } from 'lodash';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { IImage } from '../../collection';
-import { UploadImage } from '../../components';
+import { IImage } from '../../../collection';
+import { UploadImage } from '../../../components';
 import { useFormProject } from './state';
 
 function UpdateThumbnail() {

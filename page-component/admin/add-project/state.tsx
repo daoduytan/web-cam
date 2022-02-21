@@ -6,7 +6,7 @@ import React, {
 	useMemo,
 	useReducer,
 } from 'react';
-import { IProject } from '../../collection';
+import { IProject } from '../../../collection';
 
 interface IState {
 	loading: boolean;
@@ -65,7 +65,7 @@ interface IContext {
 
 const intialContext: IContext = {
 	state: initialState,
-	dispatch: () => {},
+	dispatch: () => { },
 };
 
 const ContextFormProject = createContext<IContext>(intialContext);

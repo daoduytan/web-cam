@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import get from 'lodash/get';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { SERECT_KEY } from '../../../constants';
+import { PER_PAGE, SERECT_KEY } from '../../../constants';
 import { removeVietnameseTones } from '../../../helps';
 import { dbConnect } from '../../../lib/dbConnect';
 import { Project, User } from '../../../models';
@@ -17,9 +17,14 @@ export default async function project(
 
     switch (method) {
       case 'GET':
-        const projects = await Project.find({}).populate({
-          path: 'thumbnail',
-        });
+        const page: number = Number(get(req.query, 'page', 1));
+
+        const projects = await Project.find({})
+          .populate({
+            path: 'thumbnail',
+          })
+          .skip(page * PER_PAGE - PER_PAGE)
+          .limit(10);
 
         return res.status(200).json({ status: true, data: projects });
 
@@ -61,7 +66,6 @@ export default async function project(
     }
   } catch (error) {
     console.log(error);
-
     return res.status(500).json({
       status: false,
     });
