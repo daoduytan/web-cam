@@ -1,8 +1,9 @@
+import { MinusIcon, PlusIcon, XIcon } from '@heroicons/react/solid';
 import { get } from 'lodash';
 import Image from 'next/image';
-import { useState } from 'react';
-import { IImage } from '../../collection';
-import { UploadImage } from '../../components';
+import { useEffect, useRef, useState } from 'react';
+import { IImage } from '../../../collection';
+import { UploadImage } from '../../../components';
 import { useFormProject } from './state';
 
 interface IBlock {
@@ -42,7 +43,7 @@ function BlockMenuItem({ menu }: { menu: IBlock }) {
 
 function BlockMenu() {
 	return (
-		<div className="px-3 py-2 absolute left-full top-0 border rounded bg-white flex gap-3">
+		<div className="px-3 py-2 absolute left-full translate-x-2 top-0 border rounded bg-white flex gap-3">
 			{listBlock.map((item) => (
 				<BlockMenuItem key={item.type} menu={item} />
 			))}
@@ -51,17 +52,35 @@ function BlockMenu() {
 }
 
 function BtnAddBlock() {
-	const [open, setOpen] = useState<boolean>(true);
+	const ref = useRef<any>()
+	const [open, setOpen] = useState<boolean>(false);
 
 	const toggle = () => setOpen((o) => !o);
 
+	useEffect(() => {
+		function clickOutDiv(event: any) {
+			if (ref.current && !ref.current.contains(event.target)) {
+				setOpen(false)
+			}
+
+		}
+
+		document.addEventListener('click', clickOutDiv)
+
+		return () => {
+			document.removeEventListener('click', clickOutDiv)
+
+		}
+	}, [])
+
 	return (
-		<div className="relative inline-block">
+		<div className="relative inline-block" ref={ref}>
 			<span
-				className="bg-pink-50 w-10 h-10 flex items-center justify-center cursor-pointer"
+				className="bg-blue-200 rounded w-10 h-10 flex items-center justify-center cursor-pointer"
 				onClick={toggle}
 			>
-				+
+
+				<PlusIcon className='w-5' />
 			</span>
 			{open && <BlockMenu />}
 		</div>
@@ -116,30 +135,39 @@ function BlockContent({ type, block }: any) {
 	const renderContent = () => {
 		if (type === 'image') {
 			return (
-				<UploadImage upload={changeImage} defaultValue={get(block, 'value')}>
-					<div className="relative bg-white border rounded w-full h-40 flex items-center justify-center cursor-pointer">
-						{get(block, 'value') ? (
-							<Image src={get(block, 'value')} layout="fill" alt="" />
-						) : (
-							<div className="py-10">+</div>
-						)}
+				<div className='w-full'>
+					<UploadImage upload={changeImage} defaultValue={get(block, 'value')}>
+						<div className="relative bg-white border rounded w-full h-40 flex items-center justify-center cursor-pointer">
+							{get(block, 'value') ? (
+								<Image src={get(block, 'value')} layout="fill" alt="" />
+							) : (
+								<div className="py-10">
+									<PlusIcon className='w-5' />
+								</div>
+							)}
+						</div>
+					</UploadImage>
+					<div className='mt-4'>
+						<label className='text-sm font-semibold mb-2 block'>Url image:</label>
+						<input className="w-full border block p-2 rounded text-sm" onChange={handleChange} value={get(block, 'value')} />
 					</div>
-				</UploadImage>
+				</div>
+
 			);
 		}
 		if (type === 'video') {
 			return (
-				<input
-					className="w-full block p-2 rounded"
-					type="text"
-					onChange={handleChange}
+				<textarea
+					className="w-full border block p-2 rounded text-sm"
 					value={block.value}
+					onChange={handleChange}
+					rows={4}
 				/>
 			);
 		}
 		return (
 			<textarea
-				className="w-full block p-2 rounded"
+				className="w-full border block p-2 rounded text-sm"
 				value={block.value}
 				onChange={handleChange}
 			/>
@@ -149,10 +177,10 @@ function BlockContent({ type, block }: any) {
 	return (
 		<div className="rounded flex gap-2">
 			<div
-				className="rounded bg-gray-200 w-10 h-10 flex items-center justify-center cursor-pointer"
+				className="rounded bg-red-200 w-10 h-10 flex items-center justify-center cursor-pointer"
 				onClick={removeBlock}
 			>
-				x
+				<XIcon className='w-5' />
 			</div>
 
 			{renderContent()}
@@ -164,7 +192,7 @@ function AddContent() {
 	const { project } = useFormProject();
 
 	return (
-		<div className="grid gap-2">
+		<div className="grid gap-10">
 			{get(project, 'content', []).map((item: any) => (
 				<BlockContent key={item.key} type={item.type} block={item} />
 			))}

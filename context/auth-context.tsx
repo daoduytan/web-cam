@@ -43,6 +43,7 @@ const reducerAuth = (state: IAuthState, action: IAuthAction): IAuthState => {
         loading: true,
       };
     case types.load_auth_done:
+      console.log('dasd', action.payload)
       return {
         ...state,
         isAuth: !!action.payload,
@@ -62,7 +63,7 @@ interface IAuthContext {
 
 const initialContext = {
   state: initialState,
-  dispatch: () => {},
+  dispatch: () => { },
 };
 
 const AuthContext = createContext<IAuthContext>(initialContext);
@@ -91,6 +92,8 @@ export const ProviderAuth = ({ children }: Props) => {
           },
         });
 
+        console.log('response', response)
+
         const data = await response.json();
 
         dispatch({
@@ -98,6 +101,7 @@ export const ProviderAuth = ({ children }: Props) => {
           payload: data.user,
         });
       } catch (error) {
+        console.log('error auth', error)
         dispatch({ type: types.load_auth_done, payload: null });
       }
     }
@@ -105,6 +109,13 @@ export const ProviderAuth = ({ children }: Props) => {
   }, []);
 
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
+
+  console.log('stsate', state)
+
+  if (state.loading) {
+
+    return <div>Loading ...</div>
+  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -1,6 +1,7 @@
 import { get, pick } from 'lodash';
 import { useState } from 'react';
-import { useAuth } from '../../context/auth-context';
+import { Button } from '..';
+import { useAuth } from '../../../context/auth-context';
 import { useFormProject } from './state';
 
 const getValue = (project: any) => {
@@ -63,9 +64,9 @@ function ProjectSubmitBtn() {
 	};
 
 	return (
-		<button disabled={loading || !project} onClick={handleSave}>
-			Lưu
-		</button>
+		<Button disabled={loading || !project} onClick={handleSave}>
+			Save
+		</Button>
 	);
 }
 

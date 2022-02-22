@@ -1,10 +1,10 @@
 import { NextPage } from 'next';
-import { AddProjet, DashboardLayout } from '../../../page-component';
+import { AddProject, DashboardLayout } from '../../../page-component';
 
 const ProjectNew: NextPage = () => {
   return (
-    <DashboardLayout title="Dự án mới">
-      <AddProjet />
+    <DashboardLayout title="Add new project">
+      <AddProject />
     </DashboardLayout>
   );
 };

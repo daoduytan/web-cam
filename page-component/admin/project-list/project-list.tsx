@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
+import { Button } from '..';
 import { PickToHome } from './pick-to-home';
 import { RemoveProjectBtn } from './remove-project-btn';
 
@@ -32,7 +33,7 @@ const ProjectList = () => {
     } finally {
       setLoading(false);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -62,22 +63,36 @@ const ProjectList = () => {
               </td>
               <td className={`${tdClass} border-t w-24`}>
                 <div className="w-20 h-20 bg-pink-100">
-                  <Image src={project.thumbnail.url} height={100} width={100} alt="" />
+                  {
+                    project?.thumbnail?.url && <Image
+                      src={project.thumbnail.url}
+                      height={100}
+                      width={100}
+                      alt=""
+                    />
+                  }
+
                 </div>
               </td>
               <td className={`${tdClass} border-t`}>{project.title}</td>
               <td className={`${tdClass} border-t`}>
                 <PickToHome project={project} callback={fetchData} />
-
               </td>
               <td className={`${tdClass} border-t`}>
-                <Link href={`/admin/projects/${project._id}`}>
-                  <a>Edit</a>
-                </Link>
-                <RemoveProjectBtn
-                  projectId={project._id}
-                  callback={fetchData}
-                />
+                <span className='flex gap-2'>
+                  <Link href={`/admin/projects/${project._id}`}>
+                    <a>
+                      <Button>
+                        Edit
+                      </Button>
+                    </a>
+                  </Link>
+                  <RemoveProjectBtn
+                    projectId={project._id}
+                    callback={fetchData}
+                  />
+
+                </span>
               </td>
             </tr>
           ))}

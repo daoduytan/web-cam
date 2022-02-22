@@ -42,6 +42,7 @@ function ImageList({ select }: Props) {
 	const { loading, images, fetchImageList } = useImageList();
 
 	const handleUpload = (image: IImage) => {
+
 		select(image);
 		fetchImageList();
 	};

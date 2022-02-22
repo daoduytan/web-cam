@@ -130,8 +130,8 @@ export async function getStaticProps() {
   try {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
-    // const res = await fetch('https://web-cam-gules.vercel.app/api');
-    const res = await fetch('http://localhost:3000/api');
+    const res = await fetch('https://web-cam-gules.vercel.app/api');
+    // const res = await fetch('http://localhost:3000/api');
 
     const { data: { projects } } = await res.json();
 
